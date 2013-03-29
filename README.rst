@@ -15,6 +15,7 @@ Bonus: debug_toolbar uWSGIDebugPanel
 Just add ``'uwsgi_admin.panels.uWSGIDebugPanel'`` to your ``DEBUG_TOOLBAR_PANELS``.
 
 Eg::
+
     DEBUG_TOOLBAR_PANELS = (
         'debug_toolbar.panels.version.VersionDebugPanel',
         'debug_toolbar.panels.timer.TimerDebugPanel',
