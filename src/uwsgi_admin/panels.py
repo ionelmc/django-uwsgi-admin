@@ -2,7 +2,7 @@ from debug_toolbar.panels import DebugPanel
 from django.core.context_processors import csrf
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-import uwsgi
+
 import time
 
 
@@ -23,6 +23,11 @@ class uWSGIDebugPanel(DebugPanel):
         self.request = request
 
     def content(self):
+        try:
+            import uwsgi
+        except ImportError:
+            return render_to_string('uwsgi_admin/uwsgi_panel.html', {'unavailable': True})
+            
         workers = uwsgi.workers()
         total_load = time.time() - uwsgi.started_on
         for w in workers:

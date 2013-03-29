@@ -1,5 +1,7 @@
 {% load i18n %}{% load url from future %}
-
+{% if unavailable %}
+    <h1>ERROR: Not running under uWSGI !</h1>
+{% else %}
 <div id="content-main" class="inline-related tabular">
     <div class="module">
         <table>
@@ -79,5 +81,5 @@
     <input type="submit" value="{% trans 'gracefully reload uWSGI' %}" name="_reload">
     </form>
     {% endif %}
-
 </div>
+{% endif %}

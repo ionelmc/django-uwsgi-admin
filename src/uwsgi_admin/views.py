@@ -1,4 +1,3 @@
-import uwsgi
 import time
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -11,6 +10,11 @@ from django.contrib import messages
 
 @staff_member_required
 def index(request):
+    try:
+        import uwsgi
+    except ImportError:
+        return render_to_response('uwsgi_admin/uwsgi.html', {'unavailable': True})
+
     workers = uwsgi.workers()
     total_load = time.time() - uwsgi.started_on
     for w in workers:
@@ -36,6 +40,7 @@ def index(request):
 
 @staff_member_required
 def reload(request):
+    import uwsgi
     if uwsgi.masterpid() > 0:
         uwsgi.reload()
         messages.add_message(request,
