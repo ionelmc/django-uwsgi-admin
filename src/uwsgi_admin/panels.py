@@ -1,4 +1,5 @@
 from debug_toolbar.panels import DebugPanel
+from django.core.context_processors import csrf
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 import uwsgi
@@ -18,6 +19,9 @@ class uWSGIDebugPanel(DebugPanel):
     def url(self):
         return ''
 
+    def process_request(self, request):
+        self.request = request
+
     def content(self):
         workers = uwsgi.workers()
         total_load = time.time() - uwsgi.started_on
@@ -31,12 +35,14 @@ class uWSGIDebugPanel(DebugPanel):
             for j in spooler_jobs:
                 jobs.append({'file': j, 'env': uwsgi.parsefile(j)})
         context = self.context.copy()
-        context.update({'masterpid': uwsgi.masterpid(),
-                        'started_on': time.ctime(uwsgi.started_on),
-                        'buffer_size': uwsgi.buffer_size,
-                        'total_requests': uwsgi.total_requests(),
-                        'numproc': uwsgi.numproc,
-                        'workers': workers,
-                        'jobs': jobs,
-                        })
+        context.update(csrf(self.request))
+        context.update({
+            'masterpid': uwsgi.masterpid(),
+            'started_on': time.ctime(uwsgi.started_on),
+            'buffer_size': uwsgi.buffer_size,
+            'total_requests': uwsgi.total_requests(),
+            'numproc': uwsgi.numproc,
+            'workers': workers,
+            'jobs': jobs,
+        })
         return render_to_string('uwsgi_admin/uwsgi_panel.html', context)
