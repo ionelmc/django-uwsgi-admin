@@ -5,7 +5,7 @@ import os
 
 setup(
     name = "django-uwsgi-admin",
-    version = "0.1.0",
+    version = "0.1.1",
     url = 'https://github.com/ionelmc/django-uwsgi-admin',
     download_url = '',
     license = 'BSD',

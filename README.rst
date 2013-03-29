@@ -36,9 +36,9 @@ Obligatory screenshots
 Admin
 -----
 
-.. image:: https://raw.github.com/ionelmc/django-uwsgi-admin/master/docs/uWSGI-Stats-debug-panel.jpeg
+.. image:: https://raw.github.com/ionelmc/django-uwsgi-admin/master/docs/uWSGI-Stats.jpeg
 
 Debug Toolbar
 -------------
 
-.. image:: https://raw.github.com/ionelmc/django-uwsgi-admin/master/docs/uWSGI-Stats.jpeg
+.. image:: https://raw.github.com/ionelmc/django-uwsgi-admin/master/docs/uWSGI-Stats-debug-panel.jpeg
