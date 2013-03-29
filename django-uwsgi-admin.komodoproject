@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="39ef9365-cc41-4e9c-95f6-02bef80df43f" kpf_version="5" name="django-uwsgi-admin.komodoproject">
+<preference-set idref="39ef9365-cc41-4e9c-95f6-02bef80df43f" id="project" preftype="project">
+  <string relative="path" id="import_dirname"></string>
+  <string id="import_exclude_matches">*.*~;*.bak;*.tmp;CVS;.#*;*.pyo;*.pyc;.svn;_svn;.git;.hg;.bzr;*%2525*;tmp*.html;.DS_Store;*.swp;*.kpf;*.komodoproject;.komodotools;__pycache__;dist;build;*.egg-info;.tox</string>
+  <string id="import_include_matches"></string>
+</preference-set>
+</project>

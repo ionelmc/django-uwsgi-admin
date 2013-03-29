@@ -48,4 +48,4 @@ def reload(request):
                              _('The uWSGI master process is not active'),
                              fail_silently=True)
 
-    return HttpResponseRedirect(reverse(index))
+    return HttpResponseRedirect(reverse("admin:uwsgi_status_changelist"))

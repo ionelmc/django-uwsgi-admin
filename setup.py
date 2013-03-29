@@ -28,6 +28,7 @@ setup(
     ],
     install_requires=[
         'Django',
+        'uWSGI',
         'django-admin-utils>=0.1.2',
     ]
 )
