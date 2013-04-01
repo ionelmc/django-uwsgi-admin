@@ -1,5 +1,5 @@
 import time
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.urlresolvers import reverse
@@ -13,7 +13,9 @@ def index(request):
     try:
         import uwsgi
     except ImportError:
-        return render_to_response('uwsgi_admin/uwsgi.html', {'unavailable': True})
+        return render(request, 'uwsgi_admin/uwsgi.html', {
+            'unavailable': True
+        })
 
     workers = uwsgi.workers()
     total_load = time.time() - uwsgi.started_on
@@ -27,7 +29,7 @@ def index(request):
         for j in spooler_jobs:
             jobs.append({'file': j, 'env': uwsgi.parsefile(j)})
 
-    return render_to_response('uwsgi_admin/uwsgi.html', {
+    return render(request, 'uwsgi_admin/uwsgi.html', {
         'masterpid': uwsgi.masterpid(),
         'started_on': time.ctime(uwsgi.started_on),
         'buffer_size': uwsgi.buffer_size,
@@ -35,7 +37,7 @@ def index(request):
         'numproc': uwsgi.numproc,
         'workers': workers,
         'jobs': jobs,
-    }, RequestContext(request, {}))
+    })
 
 
 @staff_member_required
