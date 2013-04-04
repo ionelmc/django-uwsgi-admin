@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
@@ -20,8 +21,9 @@ def index(request):
     workers = uwsgi.workers()
     total_load = time.time() - uwsgi.started_on
     for w in workers:
-        w['load'] = (100 * (w['running_time'] / 1000)) / total_load
-        w['last_spawn_str'] = time.ctime(w['last_spawn'])
+        w['running_time'] = w['running_time'] / 1000
+        w['load'] = w['running_time'] / total_load / 10 / len(workers)
+        w['last_spawn'] = datetime.fromtimestamp(w['last_spawn'])
 
     jobs = []
     if 'spooler' in uwsgi.opt:
@@ -31,10 +33,20 @@ def index(request):
 
     return render(request, 'uwsgi_admin/uwsgi.html', {
         'masterpid': uwsgi.masterpid(),
-        'started_on': time.ctime(uwsgi.started_on),
-        'buffer_size': uwsgi.buffer_size,
-        'total_requests': uwsgi.total_requests(),
-        'numproc': uwsgi.numproc,
+        'stats': [
+            ('masterpid', str(uwsgi.masterpid())),
+            ('started_on', datetime.fromtimestamp(uwsgi.started_on)),
+            ('now', datetime.now()),
+            ('buffer_size', uwsgi.buffer_size),
+            ('total_requests', uwsgi.total_requests()),
+            ('numproc', uwsgi.numproc),
+            ('cores', uwsgi.cores),
+            ('spooler pid', uwsgi.spooler_pid()
+                            if uwsgi.opt.get('spooler')
+                            else 'disabled'),
+            ('threads', 'enabled' if uwsgi.has_threads else 'disabled')
+        ],
+        'options': uwsgi.opt.items(),
         'workers': workers,
         'jobs': jobs,
     })

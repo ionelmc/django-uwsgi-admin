@@ -5,30 +5,39 @@
 <div id="content-main" class="inline-related tabular">
     <div class="module">
         <table>
-            <caption>{% trans 'uWSGI status' %}</caption>
+            <caption>{% trans 'Status' %}</caption>
             <tbody>
-                <tr class="row1">
-                    <th scope="row">{% trans 'masterpid' %}</th><td> {{ masterpid|stringformat:"d" }}</td>
-                </tr><tr class="row2">
-                    <th scope="row">{% trans 'started_on' %}</th><td> {{ started_on }}</td>
-                </tr><tr class="row1">
-                    <th scope="row">{% trans 'buffer size' %}</th><td> {{ buffer_size }}</td>
-                </tr><tr class="row2">
-                    <th scope="row">{% trans 'workers' %}</th><td> {{ numproc }}</td>
-                </tr><tr class="row1">
-                    <th scope="row">{% trans 'total requests' %}</th><td> {{ total_requests }}</td>
+                {% for key, value in stats %}
+                <tr class="{% cycle 'row1' 'row2' %}">
+                    <th scope="row">{% trans key %}</th><td>{{ value }}</td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
+    <div class="module">
+        <table>
+            <caption>{% trans 'Options' %}</caption>
+            <tbody>
+                {% for key, value in options %}
+                <tr class="{% cycle 'row1' 'row2' %}">
+                    <th scope="row">{% trans key %}</th><td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <div class="module balanced">
         <table>
-            <caption>{% trans 'workers' %}</caption>
+            <caption>{% trans 'Workers' %}</caption>
             <thead>
                 <tr>
                     <th>{% trans 'id' %}</th>
                     <th>{% trans 'pid' %}</th>
+                    <th>{% trans 'status' %}</th>
                     <th>{% trans 'requests' %}</th>
+                    <th>{% trans 'exceptions' %}</th>
                     <th>{% trans 'running time (milliseconds)' %}</th>
                     <th>{% trans 'load' %}</th>
                     <th>{% trans 'last spawn' %}</th>
@@ -40,15 +49,17 @@
             <tbody>
             {% for w in workers %}
                 <tr>
-                    <td align="center">{{ w.id }}</td>
-                    <td align="center">{{ w.pid }}</td>
-                    <td align="right">{{ w.requests }}</td>
-                    <td align="right">{{ w.running_time }}</td>
-                    <td align="right">{{ w.load|floatformat:2 }} %</td>
-                    <td align="right">{{ w.last_spawn_str }}</td>
-                    <td align="right">{{ w.respawn_count }}</td>
-                    <td align="right">{{ w.vsz|filesizeformat }}</td>
-                    <td align="right">{{ w.rss|filesizeformat }}</td>
+                    <td>{{ w.id }}</td>
+                    <td>{{ w.pid }}</td>
+                    <td>{{ w.status }}</td>
+                    <td>{{ w.requests }}</td>
+                    <td>{{ w.exceptions }}</td>
+                    <td>{{ w.running_time }}</td>
+                    <td>{{ w.load|floatformat:2 }} %</td>
+                    <td>{{ w.last_spawn }}</td>
+                    <td>{{ w.respawn_count }}</td>
+                    <td>{{ w.vsz|filesizeformat }}</td>
+                    <td>{{ w.rss|filesizeformat }}</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -56,7 +67,7 @@
     </div>
     <div class="module balanced">
         <table>
-            <caption>{% trans 'spooler jobs' %}</caption>
+            <caption>{% trans 'Spooler jobs' %}</caption>
             <thead>
                 <tr>
                     <th>{% trans 'job filename' %}</th>
@@ -78,7 +89,7 @@
     <br/>
     <form{% if has_file_field %} enctype="multipart/form-data"{% endif %} action="{% url 'admin:uwsgi_reload' %}" method="post">
     {% csrf_token %}
-    <input type="submit" value="{% trans 'gracefully reload uWSGI' %}" name="_reload">
+    <input type="submit" value="{% trans 'Gracefully reload uWSGI' %}" name="_reload">
     </form>
     {% endif %}
 </div>
