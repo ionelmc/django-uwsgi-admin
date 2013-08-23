@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 import os
 
 setup(
-    name = "django-uwsgi-admin",
+    name = "django-uwsgi-admin2",
     version = "0.2.0",
     url = 'https://github.com/ionelmc/django-uwsgi-admin',
     download_url = '',
