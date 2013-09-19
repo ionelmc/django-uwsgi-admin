@@ -44,3 +44,9 @@ Debug Toolbar
 -------------
 
 .. image:: https://raw.github.com/ionelmc/django-uwsgi-admin/master/docs/uWSGI-Stats-debug-panel.jpeg
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/ionelmc/django-uwsgi-admin/trend.png
+   :alt: Bitdeli badge
+   :target: https://bitdeli.com/free
+
