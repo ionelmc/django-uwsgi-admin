@@ -7,7 +7,9 @@ Fork of https://github.com/unbit/uwsgi_django with better integration, packaging
 Installation
 ============
 
-``pip install django-uwsgi-admin2`` and add ``uwsgi_admin`` to ``INSTALLED_APPS``. Thats it !
+Run ``pip install django-uwsgi-admin2`` and add ``uwsgi_admin`` to ``INSTALLED_APPS``. Thats it !
+
+.. note:: You can also run ``pip install "django-uwsgi-admin2[uwsgi]"`` - `uwsgi` is not a mandatory dependency.
 
 
 Bonus: debug_toolbar uWSGIDebugPanel
@@ -49,4 +51,3 @@ Debug Toolbar
 .. image:: https://d2weczhvl823v0.cloudfront.net/ionelmc/django-uwsgi-admin/trend.png
    :alt: Bitdeli badge
    :target: https://bitdeli.com/free
-
